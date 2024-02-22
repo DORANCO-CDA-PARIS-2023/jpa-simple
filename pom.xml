@@ -95,7 +95,7 @@
 
           <resources>
               <resource>
-                  <directory>library/src</directory>
+                  <directory>src</directory>
               </resource>
           </resources>
 

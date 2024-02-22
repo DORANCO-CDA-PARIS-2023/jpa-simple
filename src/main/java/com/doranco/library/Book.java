@@ -1,4 +1,4 @@
-package src.main.java.com.doranco.library;
+package com.doranco.library;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

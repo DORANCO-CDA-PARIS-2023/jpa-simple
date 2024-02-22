@@ -1,11 +1,10 @@
-package src.main.java.com.doranco;
+package com.doranco;
 
 
+import com.doranco.library.Book;
+import com.doranco.library.BookDAO;
 
-import src.main.java.com.doranco.library.Book;
-import src.main.java.com.doranco.library.BookDAO;
-
-class Main {
+class App {
     public static void main(String[] args) {
         // Create a BookDAO instance
         BookDAO bookDAO = new BookDAO();
