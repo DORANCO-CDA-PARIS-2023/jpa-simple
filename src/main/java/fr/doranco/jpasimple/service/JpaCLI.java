@@ -12,12 +12,14 @@ public final class JpaCLI {
 
     private EntityManagerFactory emf;
     private final Scanner sc;
+    private final ScannerUtils scUtils;
 
     private final String mediumSeparator = "----------------------------------------------------------------------------------------";
 
 
     public JpaCLI(InputStream inputStream) {
         this.sc = new Scanner(inputStream);
+        this.scUtils = new ScannerUtils(sc);
     }
 
     public int start() {
@@ -54,29 +56,24 @@ public final class JpaCLI {
 
     private void addBookAction() {
         Book book = new Book();
-        book.setTitle(ScannerUtils.getString(
-                sc,
+        book.setTitle(scUtils.getString(
                 "Entrez un titre → ",
                 false
         ));
-        book.setAuthor(ScannerUtils.getString(
-                sc,
+        book.setAuthor(scUtils.getString(
                 "Entrez le nom complet de l'auteur → ",
                 false
         ));
-        book.setType(ScannerUtils.getString(
-                sc,
+        book.setType(scUtils.getString(
                 "Entrez le genre de livre → ",
                 false
         ));
-        book.setPageNumber(ScannerUtils.getInt(
-                sc,
+        book.setPageNumber(scUtils.getInt(
                 "Entrez le nombre de page du livre → ",
                 1,
                 Integer.MAX_VALUE
         ));
-        book.setYearPublish(ScannerUtils.getInt(
-                sc,
+        book.setYearPublish(scUtils.getInt(
                 "Entrez l'année de publication du livre → ",
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE
@@ -107,8 +104,7 @@ public final class JpaCLI {
     }
 
     private void findBookByTitleAction() {
-        String title = ScannerUtils.getString(
-                sc,
+        String title = scUtils.getString(
                 "Entrez le titre du livre recherché → ",
                 false
         );
@@ -123,8 +119,7 @@ public final class JpaCLI {
     }
 
     private void findBookByAuthorAction() {
-        String author = ScannerUtils.getString(
-                sc,
+        String author = scUtils.getString(
                 "Entrez le nom (complet) de l'auteur du livre recherché → ",
                 false
         );
@@ -139,8 +134,7 @@ public final class JpaCLI {
     }
 
     private void findBookByTypeAction() {
-        String type = ScannerUtils.getString(
-                sc,
+        String type = scUtils.getString(
                 "Entrez le genre du livre recherché → ",
                 false
         );
@@ -155,8 +149,7 @@ public final class JpaCLI {
     }
 
     private void findBookByYearPublishAction() {
-        int yearPublish = ScannerUtils.getInt(
-                sc,
+        int yearPublish = scUtils.getInt(
                 "Entrez l'année de publication du livre recherché → ",
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE
@@ -172,8 +165,7 @@ public final class JpaCLI {
     }
 
     private void displayTotalPageNumberByAuthorAction() {
-        String author = ScannerUtils.getString(
-                sc,
+        String author = scUtils.getString(
                 "Entrez le nom (complet) de l'auteur pour lequel vous souhaitez afficher le nombre total de pages → ",
                 false
         );
@@ -189,14 +181,12 @@ public final class JpaCLI {
     }
 
     private void updatePageNumberAction() {
-        long bookId = ScannerUtils.getLong(
-                sc,
+        long bookId = scUtils.getLong(
                 "Entrez l'id du livre pour lequel vous souhaitez modifier le nombre de page → ",
                 1L,
                 Long.MAX_VALUE
         );
-        int pageNumber = ScannerUtils.getInt(
-                sc,
+        int pageNumber = scUtils.getInt(
                 "Entrez le nombre de page que vous souhaitez affecter au livre → ",
                 1,
                 Integer.MAX_VALUE
@@ -232,8 +222,7 @@ public final class JpaCLI {
     }
 
     private void deleteBookAction() {
-        long bookId = ScannerUtils.getLong(
-                sc,
+        long bookId = scUtils.getLong(
                 "Entrez l'id du livre que vous souhaitez supprimer → ",
                 1L,
                 Long.MAX_VALUE

@@ -4,7 +4,13 @@ import java.util.Scanner;
 
 public final class ScannerUtils {
 
-    public static int getInt(Scanner sc, String prompt, int minValue, int maxValue) {
+    private final Scanner sc;
+
+    public ScannerUtils(Scanner sc) {
+        this.sc = sc;
+    }
+
+    public int getInt(String prompt, int minValue, int maxValue) {
         int result = 0;
         boolean done = false;
         do {
@@ -25,7 +31,7 @@ public final class ScannerUtils {
         return result;
     }
 
-    public static long getLong(Scanner sc, String prompt, long minValue, long maxValue) {
+    public long getLong(String prompt, long minValue, long maxValue) {
         long result = 0;
         boolean done = false;
         do {
@@ -46,7 +52,7 @@ public final class ScannerUtils {
         return result;
     }
 
-    public static String getString(Scanner sc, String prompt, boolean onlyNumeric) {
+    public String getString(String prompt, boolean onlyNumeric) {
         String result = null;
 
         do {
