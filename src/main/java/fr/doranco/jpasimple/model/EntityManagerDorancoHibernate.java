@@ -11,7 +11,7 @@ public final class EntityManagerDorancoHibernate {
     private EntityManagerFactory emf;
 
     private EntityManagerDorancoHibernate() throws PersistenceException {
-        this.emf = Persistence.createEntityManagerFactory("dorancoHibernat");
+        this.emf = Persistence.createEntityManagerFactory("dorancoHibernate");
     }
 
     public static EntityManagerDorancoHibernate getINSTANCE() throws PersistenceException {
