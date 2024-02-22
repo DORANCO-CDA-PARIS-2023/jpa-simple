@@ -43,19 +43,23 @@ public class AppLivre {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         try {
-            List<Livre> livres = entityManager.createQuery("SELECT l FROM Livre l", Livre.class).getResultList();
+            // We use the NamedQuery here
+            List<Livre> livres = entityManager.createNamedQuery("Livre.findAll", Livre.class).getResultList();
             for (Livre livre : livres) {
-                System.out.println(livre);
+                System.out.println("Livre: " + livre.getTitre() + ", Auteur: " + livre.getAuteur() + ", Genre: "
+                        + livre.getGenre() + ", Année de publication: " + livre.getAnneePublication()
+                        + ", Nombre de pages: " + livre.getNombrePages());
             }
-        } finally {
-            entityManager.close();
-            entityManagerFactory.close();
+        } catch (RuntimeException e) {
         }
+        entityManager.close();
+        entityManagerFactory.close();
+
     }
 
     public static void main(String[] args) {
         // After i must add the scanner for this, this is just to debug
-        // ajouterLivre("Test titre", "Test auteur", "Fiction", 2024, 2);
+        ajouterLivre("Test titre 2", "Test 2", "SF", 2022, 2);
         afficherLivres();
 
     }
