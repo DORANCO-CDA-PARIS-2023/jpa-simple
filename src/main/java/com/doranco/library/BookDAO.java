@@ -7,10 +7,10 @@ import jakarta.persistence.Persistence;
 import java.util.List;
 
 public class BookDAO {
-    private final EntityManagerFactory emf;
+    private static EntityManagerFactory emf ;
 
     public BookDAO() {
-        emf = (EntityManagerFactory) Persistence.createEntityManagerFactory("library");
+        emf =  Persistence.createEntityManagerFactory("library");
     }
 
     public void save(Book book) {

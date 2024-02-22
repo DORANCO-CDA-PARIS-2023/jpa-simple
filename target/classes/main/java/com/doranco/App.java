@@ -10,9 +10,11 @@ class App {
         BookDAO bookDAO = new BookDAO();
 
         // Create and save a new book
-        Book book1 = new Book();
+        Book book1 = new Book("2","Author1","Poems",1999,85);
         book1.setTitle("The Great Gatsby");
         book1.setAuthor("F. Scott Fitzgerald");
+        Book book2=new Book("CatTrap","Nia.T","Story",2023,150);
+        bookDAO.save(book2);
         bookDAO.save(book1);
         System.out.println("Book saved: " + book1);
 
