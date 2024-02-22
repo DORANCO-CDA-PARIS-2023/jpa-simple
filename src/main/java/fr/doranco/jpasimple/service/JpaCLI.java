@@ -10,38 +10,37 @@ import java.util.Scanner;
 
 public final class JpaCLI {
 
-    private InputStream inputStream;
-    private EntityManagerFactory emf;
+    private final EntityManagerFactory emf;
+    private final Scanner sc;
 
-    private String mediumSeparator = "----------------------------------------------------------------------------------------";
+    private final String mediumSeparator = "----------------------------------------------------------------------------------------";
 
 
     public JpaCLI(InputStream inputStream) {
-        this.inputStream = inputStream;
+        this.sc = new Scanner(inputStream);
         this.emf = EntityManagerDorancoHibernate.getINSTANCE().getEntityManagerFactory();
     }
 
     public int start() {
-        Scanner sc = new Scanner(inputStream);
 
         int actionId;
-        while ((actionId = getActions(sc)) != 10) {
+        while ((actionId = getActions()) != 10) {
             switch (actionId) {
-                case 1 -> addBookAction(sc);
-                case 2 -> displayAllBookAction(sc);
-                case 3 -> findBookByTitleAction(sc);
-                case 4 -> findBookByAuthorAction(sc);
-                case 5 -> findBookByTypeAction(sc);
-                case 6 -> findBookByYearPublishAction(sc);
-                case 7 -> displayTotalPageNumberByAuthorAction(sc);
-                case 8 -> updatePageNumberAction(sc);
-                case 9 -> deleteBookAction(sc);
+                case 1 -> addBookAction();
+                case 2 -> displayAllBookAction();
+                case 3 -> findBookByTitleAction();
+                case 4 -> findBookByAuthorAction();
+                case 5 -> findBookByTypeAction();
+                case 6 -> findBookByYearPublishAction();
+                case 7 -> displayTotalPageNumberByAuthorAction();
+                case 8 -> updatePageNumberAction();
+                case 9 -> deleteBookAction();
             }
         }
         return 0;
     }
 
-    private void addBookAction(Scanner sc) {
+    private void addBookAction() {
         Book book = new Book();
         book.setTitle(ScannerUtils.getString(
                 sc,
@@ -85,7 +84,7 @@ public final class JpaCLI {
         }
     }
 
-    private void displayAllBookAction(Scanner sc) {
+    private void displayAllBookAction() {
         System.out.println(mediumSeparator);
         try (EntityManager em = emf.createEntityManager()) {
             TypedQuery<Book> findAll = em.createNamedQuery("findAll", Book.class);
@@ -95,7 +94,7 @@ public final class JpaCLI {
         }
     }
 
-    private void findBookByTitleAction(Scanner sc) {
+    private void findBookByTitleAction() {
         String title = ScannerUtils.getString(
                 sc,
                 "Entrez le titre du livre recherché → ",
@@ -111,7 +110,7 @@ public final class JpaCLI {
         }
     }
 
-    private void findBookByAuthorAction(Scanner sc) {
+    private void findBookByAuthorAction() {
         String author = ScannerUtils.getString(
                 sc,
                 "Entrez le nom (complet) de l'auteur du livre recherché → ",
@@ -127,7 +126,7 @@ public final class JpaCLI {
         }
     }
 
-    private void findBookByTypeAction(Scanner sc) {
+    private void findBookByTypeAction() {
         String type = ScannerUtils.getString(
                 sc,
                 "Entrez le genre du livre recherché → ",
@@ -143,7 +142,7 @@ public final class JpaCLI {
         }
     }
 
-    private void findBookByYearPublishAction(Scanner sc) {
+    private void findBookByYearPublishAction() {
         int yearPublish = ScannerUtils.getInt(
                 sc,
                 "Entrez l'année de publication du livre recherché → ",
@@ -160,7 +159,7 @@ public final class JpaCLI {
         }
     }
 
-    private void displayTotalPageNumberByAuthorAction(Scanner sc) {
+    private void displayTotalPageNumberByAuthorAction() {
         String author = ScannerUtils.getString(
                 sc,
                 "Entrez le nom (complet) de l'auteur pour lequel vous souhaitez afficher le nombre total de pages → ",
@@ -177,7 +176,7 @@ public final class JpaCLI {
         }
     }
 
-    private void updatePageNumberAction(Scanner sc) {
+    private void updatePageNumberAction() {
         long bookId = ScannerUtils.getLong(
                 sc,
                 "Entrez l'id du livre pour lequel vous souhaitez modifier le nombre de page → ",
@@ -220,7 +219,7 @@ public final class JpaCLI {
         }
     }
 
-    private void deleteBookAction(Scanner sc) {
+    private void deleteBookAction() {
         long bookId = ScannerUtils.getLong(
                 sc,
                 "Entrez l'id du livre que vous souhaitez supprimer → ",
@@ -250,7 +249,7 @@ public final class JpaCLI {
         }
     }
 
-    private int getActions(Scanner sc) {
+    private int getActions() {
         int result = 0;
 
         do {
