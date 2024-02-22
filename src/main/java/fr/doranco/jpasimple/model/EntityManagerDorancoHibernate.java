@@ -24,4 +24,9 @@ public final class EntityManagerDorancoHibernate {
     public EntityManagerFactory getEntityManagerFactory() {
         return this.emf;
     }
+
+    public void closeEntityManagerFactory() {
+        this.emf.close();
+        INSTANCE = null;
+    }
 }

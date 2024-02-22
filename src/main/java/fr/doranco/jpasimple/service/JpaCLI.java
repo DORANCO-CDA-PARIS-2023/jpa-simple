@@ -43,7 +43,7 @@ public final class JpaCLI {
             }
         }
 
-        this.emf.close();
+        EntityManagerDorancoHibernate.getINSTANCE().closeEntityManagerFactory();
         return 0;
     }
 
