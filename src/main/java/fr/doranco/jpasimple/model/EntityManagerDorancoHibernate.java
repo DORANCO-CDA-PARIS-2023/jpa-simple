@@ -2,6 +2,7 @@ package fr.doranco.jpasimple.model;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.PersistenceException;
 
 public final class EntityManagerDorancoHibernate {
 
@@ -9,11 +10,11 @@ public final class EntityManagerDorancoHibernate {
 
     private EntityManagerFactory emf;
 
-    private EntityManagerDorancoHibernate() {
-        this.emf = Persistence.createEntityManagerFactory("dorancoHibernate");
+    private EntityManagerDorancoHibernate() throws PersistenceException {
+        this.emf = Persistence.createEntityManagerFactory("dorancoHibernat");
     }
 
-    public static EntityManagerDorancoHibernate getINSTANCE() {
+    public static EntityManagerDorancoHibernate getINSTANCE() throws PersistenceException {
         if (INSTANCE == null) {
             INSTANCE = new EntityManagerDorancoHibernate();
         }

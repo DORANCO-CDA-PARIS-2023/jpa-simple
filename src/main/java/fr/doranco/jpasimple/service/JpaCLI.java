@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public final class JpaCLI {
 
-    private final EntityManagerFactory emf;
+    private EntityManagerFactory emf;
     private final Scanner sc;
 
     private final String mediumSeparator = "----------------------------------------------------------------------------------------";
@@ -18,10 +18,15 @@ public final class JpaCLI {
 
     public JpaCLI(InputStream inputStream) {
         this.sc = new Scanner(inputStream);
-        this.emf = EntityManagerDorancoHibernate.getINSTANCE().getEntityManagerFactory();
     }
 
     public int start() {
+        try {
+            this.emf = EntityManagerDorancoHibernate.getINSTANCE().getEntityManagerFactory();
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+            return 1;
+        }
 
         int actionId;
         while ((actionId = getActions()) != 10) {
