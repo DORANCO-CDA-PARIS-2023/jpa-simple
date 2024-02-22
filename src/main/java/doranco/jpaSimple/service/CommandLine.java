@@ -118,15 +118,19 @@ public class CommandLine {
 
 	private void addLivre() throws SQLException, NotFoundEntityException {
 		
-        System.out.println("Enter title : ");
+		System.out.print("Enter title : ");
         String title = sc.next();
-        System.out.println("Enter genre : ");
+        
+		System.out.print("Enter genre : ");
         String genre = sc.next();
-        System.out.println("Enter year : ");
+        
+        System.out.print("Enter year : ");
         int year = sc.nextInt();
-        System.out.println("Enter page N : ");
+        
+        System.out.print("Enter pages : ");
         int pages = sc.nextInt();
-        System.out.println("Enter auteur : ");
+        
+        System.out.print("Enter author : ");
         String author = sc.next();
 		
 		Livre newLivre = new Livre(title, genre, year, pages, author);

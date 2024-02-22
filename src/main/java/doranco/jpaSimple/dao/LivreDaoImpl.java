@@ -63,21 +63,7 @@ public class LivreDaoImpl implements ILivreDao {
 
 	@Override
 	public void create(Livre Livre) throws SQLException, NotFoundEntityException {
-		String query = """
-				    INSERT INTO Livre (titer, genre, anneePublication, nombrePages, auteur)
-				    VALUE (?, ?, ?, ?, ?)
-				""";
-//        PreparedStatement statement =  connection.prepareStatement(query);
-//        statement.setString(1, Livre.getTitre());
-//        statement.setString(2, Livre.getGenre());
-//        statement.setInt(3, Livre.getAnneePublication());
-//        statement.setInt(4, Livre.getNombrePages());
-//        statement.setString(5, Livre.getAuteur());
-//        try {
-//            statement.execute();
-//        } catch (SQLIntegrityConstraintViolationException e) {
-//            throw new NotFoundEntityException("Author ID : " + Livre.getAuteur() + " doesn't exist");
-//        }
+		
 		try (EntityManager em = emf.createEntityManager()) {
 			EntityTransaction transaction = em.getTransaction();
 			transaction.begin();
