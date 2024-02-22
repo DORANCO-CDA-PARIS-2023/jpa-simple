@@ -1,5 +1,6 @@
-package doranco;
+package doranco.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,8 +20,17 @@ public class Livre {
     @Column(name = "auteur")
     private String auteur;
 
+    @Column(name = "genre")
     private String genre;
+
+    @Column(name = "anneePublication")
     private Integer anneePublication;
+
+    @Column(name = "nombrePages")
     private Integer nombrePages;
+
+    public void setTitle(String string) {
+        throw new UnsupportedOperationException("Unimplemented method 'setTitle'");
+    }
 
 }
