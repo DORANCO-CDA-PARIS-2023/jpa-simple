@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 public class Livre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id")
     private Long id;
 
@@ -29,8 +28,52 @@ public class Livre {
     @Column(name = "nombrePages")
     private Integer nombrePages;
 
-    public void setTitle(String string) {
-        throw new UnsupportedOperationException("Unimplemented method 'setTitle'");
+    // Getters et Setters
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getAuteur() {
+        return auteur;
+    }
+
+    public void setAuteur(String auteur) {
+        this.auteur = auteur;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public Integer getAnneePublication() {
+        return anneePublication;
+    }
+
+    public void setAnneePublication(Integer anneePublication) {
+        this.anneePublication = anneePublication;
+    }
+
+    public Integer getNombrePages() {
+        return nombrePages;
+    }
+
+    public void setNombrePages(Integer nombrePages) {
+        this.nombrePages = nombrePages;
+    }
 }
