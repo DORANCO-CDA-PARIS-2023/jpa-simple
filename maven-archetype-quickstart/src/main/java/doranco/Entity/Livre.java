@@ -1,12 +1,18 @@
 package doranco.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Livre.findAll", query = "SELECT l FROM Livre l"),
+        @NamedQuery(name = "Livre.findByTitre", query = "SELECT l FROM Livre l WHERE l.titre LIKE :titre"),
+        @NamedQuery(name = "Livre.findByAuteur", query = "SELECT l FROM Livre l WHERE l.auteur = :auteur"),
+        @NamedQuery(name = "Livre.findByGenre", query = "SELECT l FROM Livre l WHERE l.genre = :genre"),
+        @NamedQuery(name = "Livre.findByAnneePublication", query = "SELECT l FROM Livre l WHERE l.anneePublication = :anneePublication"),
+        @NamedQuery(name = "Livre.findByNombrePages", query = "SELECT l FROM Livre l WHERE l.nombrePages = :nombrePages")
+})
+
+@Table(name = "livre")
 public class Livre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,4 +82,5 @@ public class Livre {
     public void setNombrePages(Integer nombrePages) {
         this.nombrePages = nombrePages;
     }
+
 }

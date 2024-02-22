@@ -4,6 +4,7 @@ import doranco.Entity.Livre;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import java.util.List;
 
 public class AppLivre {
 
@@ -37,8 +38,25 @@ public class AppLivre {
         entityManagerFactory.close();
     }
 
+    public static void afficherLivres() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CoursJpa");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            List<Livre> livres = entityManager.createQuery("SELECT l FROM Livre l", Livre.class).getResultList();
+            for (Livre livre : livres) {
+                System.out.println(livre);
+            }
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+    }
+
     public static void main(String[] args) {
         // After i must add the scanner for this, this is just to debug
-        ajouterLivre("Test titre", "Test auteur", "Fiction", 2024, 2);
+        // ajouterLivre("Test titre", "Test auteur", "Fiction", 2024, 2);
+        afficherLivres();
+
     }
 }
