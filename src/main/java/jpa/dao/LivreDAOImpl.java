@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import jpa.aggregation.TotalPageResult;
 import jpa.entity.Livre;
 
 public class LivreDAOImpl implements ILivreDAO {
@@ -37,44 +38,51 @@ public class LivreDAOImpl implements ILivreDAO {
 
 	@Override
 	public void remove(EntityManager em, int id) throws Exception {
-		// TODO Auto-generated method stub
-		
+		TypedQuery<Livre> remove = em.createQuery("DELETE FROM Livre l WHERE l.id = :id", Livre.class);
+		remove.executeUpdate();
 	}
 
 	@Override
 	public List<Livre> findByTitre(EntityManager em, String titre) {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Livre> findByTitle = em.createQuery("SELECT l FROM Livre l WHERE l.title LIKE :title", Livre.class);
+		findByTitle.setParameter("title", "%" + titre + "%");
+		return findByTitle.getResultList();
 	}
 
 	@Override
 	public List<Livre> findByAuteur(EntityManager em, String auteur) {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Livre> findByAuthor = em.createQuery("SELECT l FROM Livre l WHERE l.author LIKE :author", Livre.class);
+		findByAuthor.setParameter("author", "%" + auteur + "%");
+		return findByAuthor.getResultList();
 	}
 
 	@Override
 	public List<Livre> findByGenre(EntityManager em, String genre) {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Livre> findByGenre = em.createQuery("SELECT l FROM Livre l WHERE l.genre LIKE :genre", Livre.class);
+		findByGenre.setParameter("genre", "%" + genre + "%");
+		return findByGenre.getResultList();
 	}
 
 	@Override
 	public List<Livre> findByAnneePublication(EntityManager em, int annee) {
-		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Livre> findByYear = em.createQuery("SELECT l FROM Livre l WHERE l.publishing_year = :year", Livre.class);
+		findByYear.setParameter("year", annee);
+		return findByYear.getResultList();
 	}
 
 	@Override
-	public int totalPages(EntityManager em, String auteur) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Long totalPages(EntityManager em, String auteur) {
+		TypedQuery<TotalPageResult> countTotalPages = em.createQuery("SELECT new jpa.aggregation.TotalPageResult(l.auteur, SUM(l.nombreDePages)) FROM Livre l WHERE l.auteur LIKE :author", TotalPageResult.class);
+		countTotalPages.setParameter("author", "%" + auteur + "%");
+		return countTotalPages.getSingleResult().getTotalPages();
 	}
 
 	@Override
-	public Livre modifierNombrePages(EntityManager em, int idLivre, int nouveauNombre) {
-		// TODO Auto-generated method stub
-		return null;
+	public void modifierNombrePages(EntityManager em, int idLivre, int nouveauNombre) {
+		Query setNumberOfPages = em.createQuery(" UPDATE Livre SET nombreDePages = :nouveauNombre WHERE id = :idLivre");
+		setNumberOfPages.setParameter("nouveauNombre", nouveauNombre);
+		setNumberOfPages.setParameter("idLivre", idLivre);
+		setNumberOfPages.executeUpdate();
 	}
 
 

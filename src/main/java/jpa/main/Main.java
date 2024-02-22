@@ -17,12 +17,12 @@ public class Main {
 		 EntityTransaction transaction = em.getTransaction();
 //		 transaction.begin();
 		 // Opérations CRUD avec la classe Employee
-		 Livre newLivre = new Livre();
-		 newLivre.setTitre("Dracula");
-		 newLivre.setAuteur("Bram Stoker");
-		 newLivre.setGenre("Fantastique");
-		 newLivre.setAnneePublication(1839);
-		 newLivre.setNombreDePages(600);
+//		 Livre newLivre = new Livre();
+//		 newLivre.setTitre("Dracula");
+//		 newLivre.setAuteur("Bram Stoker");
+//		 newLivre.setGenre("Fantastique");
+//		 newLivre.setAnneePublication(1839);
+//		 newLivre.setNombreDePages(600);
 //		 em.persist(newLivre); // Create
 //		 Livre foundLivre = em.find(Livre.class, 1L); // Read
 //		 foundLivre.setGenre("SF");
@@ -32,8 +32,9 @@ public class Main {
 		 
 	    ILivreDAO livreDAO = new LivreDAOImpl();
 //	    System.out.println(livreDAO.getById(em, 1).toString());
+//	    System.out.println(livreDAO.totalPages(em, "Dick"));
 		 transaction.begin();
-		 livreDAO.add(em, newLivre);
+		 livreDAO.modifierNombrePages(em, 16, 4000);
 		 transaction.commit();
 		 
 		 } catch (Exception e) {
