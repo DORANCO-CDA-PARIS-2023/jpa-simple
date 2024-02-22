@@ -8,7 +8,7 @@ import jakarta.persistence.Persistence;
 
 public class AppLivre {
     public static void main(String[] args) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("cours");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CoursJpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         EntityTransaction transaction = entityManager.getTransaction();
