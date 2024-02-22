@@ -16,6 +16,7 @@ class App {
         Book book2=new Book("CatTrap","Nia.T","Story",2023,150);
         bookDAO.save(book2);
         bookDAO.save(book1);
+        bookDAO.save(new Book("Narsaiyo","Harindra Dave","spritual",1985,150));
         System.out.println("Book saved: " + book1);
 
         // Find a book by its ID
