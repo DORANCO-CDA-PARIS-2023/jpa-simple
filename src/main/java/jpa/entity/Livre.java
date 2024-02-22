@@ -79,6 +79,12 @@ public class Livre {
 	public void setNombreDePages(int nombreDePages) {
 		this.nombreDePages = nombreDePages;
 	}
+
+	@Override
+	public String toString() {
+		return "Livre [id=" + id + ", titre=" + titre + ", auteur=" + auteur + ", genre=" + genre
+				+ ", anneePublication=" + anneePublication + ", nombreDePages=" + nombreDePages + "]";
+	}
 	 
 	 
 
