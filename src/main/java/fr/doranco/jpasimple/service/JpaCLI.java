@@ -42,6 +42,8 @@ public final class JpaCLI {
                 case 9 -> deleteBookAction();
             }
         }
+
+        this.emf.close();
         return 0;
     }
 
