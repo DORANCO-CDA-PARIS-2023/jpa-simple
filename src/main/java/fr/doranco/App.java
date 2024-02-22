@@ -10,7 +10,7 @@ public class App {
 
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("dorancoHibernate");
-        JpaCLI jpaCLI = new JpaCLI(System.in, emf);
+        JpaCLI jpaCLI = new JpaCLI(System.in);
         int exitCode = jpaCLI.start();
         emf.close();
         System.exit(exitCode);

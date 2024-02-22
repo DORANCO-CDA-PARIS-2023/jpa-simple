@@ -1,6 +1,7 @@
 package fr.doranco.jpasimple.service;
 
 import fr.doranco.jpasimple.entity.Book;
+import fr.doranco.jpasimple.model.EntityManagerDorancoHibernate;
 import fr.doranco.jpasimple.utils.ScannerUtils;
 import jakarta.persistence.*;
 
@@ -15,9 +16,9 @@ public final class JpaCLI {
     private String mediumSeparator = "----------------------------------------------------------------------------------------";
 
 
-    public JpaCLI(InputStream inputStream, EntityManagerFactory emf) {
+    public JpaCLI(InputStream inputStream) {
         this.inputStream = inputStream;
-        this.emf = emf;
+        this.emf = EntityManagerDorancoHibernate.getINSTANCE().getEntityManagerFactory();
     }
 
     public int start() {
