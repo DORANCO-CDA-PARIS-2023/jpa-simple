@@ -10,7 +10,7 @@
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1/doranco_hibernate"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value="root"/>
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <!--<property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>-->
         </properties>
     </persistence-unit>
 </persistence>

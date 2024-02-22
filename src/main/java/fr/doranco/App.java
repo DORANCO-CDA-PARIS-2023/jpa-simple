@@ -2,13 +2,18 @@ package fr.doranco;
 
 
 import fr.doranco.jpasimple.service.JpaCLI;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 
 public class App {
 
     public static void main(String[] args) {
-        JpaCLI jpaCLI = new JpaCLI(System.in);
-        System.exit(jpaCLI.start());
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("dorancoHibernate");
+        JpaCLI jpaCLI = new JpaCLI(System.in, emf);
+        int exitCode = jpaCLI.start();
+        emf.close();
+        System.exit(exitCode);
     }
 
 //    public static void main( String[] args ) {

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "book")
+@NamedQuery(name = "findAll", query = "SELECT b FROM Book b")
 @NamedQuery(name = "findByTitle", query = "SELECT b FROM Book b WHERE title LIKE :title")
 @NamedQuery(name = "findByAuthor", query = "SELECT b FROM Book b WHERE author LIKE :author")
 @NamedQuery(name = "findByType", query = "SELECT b FROM Book b WHERE type LIKE :type")

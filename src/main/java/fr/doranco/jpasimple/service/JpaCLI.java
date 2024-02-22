@@ -1,15 +1,23 @@
 package fr.doranco.jpasimple.service;
 
+import fr.doranco.jpasimple.entity.Book;
+import fr.doranco.jpasimple.utils.ScannerUtils;
+import jakarta.persistence.*;
+
 import java.io.InputStream;
 import java.util.Scanner;
 
 public final class JpaCLI {
 
     private InputStream inputStream;
+    private EntityManagerFactory emf;
+
+    private String mediumSeparator = "----------------------------------------------------------------------------------------";
 
 
-    public JpaCLI(InputStream inputStream) {
+    public JpaCLI(InputStream inputStream, EntityManagerFactory emf) {
         this.inputStream = inputStream;
+        this.emf = emf;
     }
 
     public int start() {
@@ -33,39 +41,212 @@ public final class JpaCLI {
     }
 
     private void addBookAction(Scanner sc) {
+        Book book = new Book();
+        book.setTitle(ScannerUtils.getString(
+                sc,
+                "Entrez un titre → ",
+                false
+        ));
+        book.setAuthor(ScannerUtils.getString(
+                sc,
+                "Entrez le nom complet de l'auteur → ",
+                false
+        ));
+        book.setType(ScannerUtils.getString(
+                sc,
+                "Entrez le genre de livre → ",
+                false
+        ));
+        book.setPageNumber(ScannerUtils.getInt(
+                sc,
+                "Entrez le nombre de page du livre → ",
+                1,
+                Integer.MAX_VALUE
+        ));
+        book.setYearPublish(ScannerUtils.getInt(
+                sc,
+                "Entrez l'année de publication du livre → ",
+                Integer.MIN_VALUE,
+                Integer.MAX_VALUE
+        ));
 
+        System.out.println(mediumSeparator);
+
+
+        try (EntityManager em = emf.createEntityManager()) {
+            EntityTransaction transaction = em.getTransaction();
+            transaction.begin();
+            em.persist(book);
+            transaction.commit();
+            System.out.println("Livre enregistré avec succès.");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void displayAllBookAction(Scanner sc) {
-        System.out.println("displayAllBookAction");
+        System.out.println(mediumSeparator);
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Book> findAll = em.createNamedQuery("findAll", Book.class);
+            findAll.getResultStream().map(Book::toString).forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void findBookByTitleAction(Scanner sc) {
-        System.out.println("findBookByTitleAction");
+        String title = ScannerUtils.getString(
+                sc,
+                "Entrez le titre du livre recherché → ",
+                false
+        );
+        System.out.println(mediumSeparator);
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Book> findByTitle = em.createNamedQuery("findByTitle", Book.class);
+            findByTitle.setParameter("title", title);
+            findByTitle.getResultStream().map(Book::toString).forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void findBookByAuthorAction(Scanner sc) {
-        System.out.println("findBookByAuthorAction");
+        String author = ScannerUtils.getString(
+                sc,
+                "Entrez le nom (complet) de l'auteur du livre recherché → ",
+                false
+        );
+        System.out.println(mediumSeparator);
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Book> findByAuthor = em.createNamedQuery("findByAuthor", Book.class);
+            findByAuthor.setParameter("author", author);
+            findByAuthor.getResultStream().map(Book::toString).forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void findBookByTypeAction(Scanner sc) {
-        System.out.println("findBookByTypeAction");
+        String type = ScannerUtils.getString(
+                sc,
+                "Entrez le genre du livre recherché → ",
+                false
+        );
+        System.out.println(mediumSeparator);
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Book> findByType = em.createNamedQuery("findByType", Book.class);
+            findByType.setParameter("type", type);
+            findByType.getResultStream().map(Book::toString).forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void findBookByYearPublishAction(Scanner sc) {
-        System.out.println("findBookByYearPublishAction");
+        int yearPublish = ScannerUtils.getInt(
+                sc,
+                "Entrez l'année de publication du livre recherché → ",
+                Integer.MIN_VALUE,
+                Integer.MAX_VALUE
+        );
+        System.out.println(mediumSeparator);
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Book> findByYearPublish = em.createNamedQuery("findByYearPublish", Book.class);
+            findByYearPublish.setParameter("yearPublish", yearPublish);
+            findByYearPublish.getResultStream().map(Book::toString).forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void displayTotalPageNumberByAuthorAction(Scanner sc) {
-        System.out.println("displayTotalPageNumberByAuthorAction");
+        String author = ScannerUtils.getString(
+                sc,
+                "Entrez le nom (complet) de l'auteur pour lequel vous souhaitez afficher le nombre total de pages → ",
+                false
+        );
+        System.out.println(mediumSeparator);
+        try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Book> findByAuthor = em.createNamedQuery("findByAuthor", Book.class);
+            findByAuthor.setParameter("author", author);
+            int pagesSum = findByAuthor.getResultStream().mapToInt(Book::getPageNumber).sum();
+            System.out.println("Nombre de pages de l'auteur: " + pagesSum);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void updatePageNumberAction(Scanner sc) {
-        System.out.println("updatePageNumberAction");
+        long bookId = ScannerUtils.getLong(
+                sc,
+                "Entrez l'id du livre pour lequel vous souhaitez modifier le nombre de page → ",
+                1L,
+                Long.MAX_VALUE
+        );
+        int pageNumber = ScannerUtils.getInt(
+                sc,
+                "Entrez le nombre de page que vous souhaitez affecter au livre → ",
+                1,
+                Integer.MAX_VALUE
+        );
+
+        System.out.println(mediumSeparator);
+
+        try (EntityManager em = emf.createEntityManager()) {
+            EntityTransaction transaction = em.getTransaction();
+            transaction.begin();
+
+            Book book = em.find(Book.class, bookId);
+
+            if (book == null) {
+                System.out.println("Il n'y a aucun book avec l'id " + bookId + ".");
+                return;
+            }
+
+            int oldPageNumber = book.getPageNumber();
+            book.setPageNumber(pageNumber);
+            em.merge(book);
+
+            transaction.commit();
+
+            System.out.println(String.format(
+                    "Nombre de page modifié avec succès (%d → %d).",
+                    oldPageNumber,
+                    pageNumber
+            ));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void deleteBookAction(Scanner sc) {
-        System.out.println("deleteBookAction");
+        long bookId = ScannerUtils.getLong(
+                sc,
+                "Entrez l'id du livre que vous souhaitez supprimer → ",
+                1L,
+                Long.MAX_VALUE
+        );
+
+        System.out.println(mediumSeparator);
+
+        try (EntityManager em = emf.createEntityManager()) {
+            EntityTransaction transaction = em.getTransaction();
+            transaction.begin();
+
+            Book book = em.find(Book.class, bookId);
+
+            if (book == null) {
+                System.out.println("Il n'y a aucun book avec l'id " + bookId + ".");
+                return;
+            }
+            em.remove(book);
+
+            transaction.commit();
+
+            System.out.println("Le livre avec l'id " + bookId + " a bien été supprimé.");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private int getActions(Scanner sc) {
@@ -85,8 +266,7 @@ public final class JpaCLI {
                     9. Supprimer un livre
                     10. Quitter le programme
                     ========================================================================================
-                    Entrez votre choix →
-                    """;
+                    Entrez votre choix → """;
             System.out.print(prompt);
             try {
                 int input = sc.nextInt();
