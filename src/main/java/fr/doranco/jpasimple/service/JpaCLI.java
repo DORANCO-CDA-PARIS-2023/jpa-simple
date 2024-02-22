@@ -43,7 +43,12 @@ public final class JpaCLI {
             }
         }
 
-        EntityManagerDorancoHibernate.getINSTANCE().closeEntityManagerFactory();
+        try {
+            EntityManagerDorancoHibernate.getINSTANCE().closeEntityManagerFactory();
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+            return 1;
+        }
         return 0;
     }
 
