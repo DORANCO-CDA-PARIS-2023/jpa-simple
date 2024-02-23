@@ -1,3 +1,7 @@
+package com.doranco.entity;
+
+import jakarta.persistence.*;
+
 @Entity
 public class Genre {
     @Id
