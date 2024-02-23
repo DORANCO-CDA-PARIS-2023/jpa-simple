@@ -6,6 +6,7 @@
     <persistence-unit name="correctionTp3">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.doranco.entity.Livre</class>
+        <class>com.doranco.entity.Author</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost/doranco_correction_tp3" />
             <property name="jakarta.persistence.jdbc.user" value="root" />

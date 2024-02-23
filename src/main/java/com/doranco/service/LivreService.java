@@ -30,11 +30,11 @@ public class LivreService {
                 .createQuery( "SELECT l FROM Livre l", Livre.class)
                 .getResultList();
     }
-
+/*
     public List<Livre> findByAuthor(String author)
     {
         Query query = manager.createQuery("SELECT l FROM Livre l WHERE l.author = :author");
         query.setParameter("author", author);
         return query.getResultList();
-    }
+    }*/
 }

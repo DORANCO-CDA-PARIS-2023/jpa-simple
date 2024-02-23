@@ -8,7 +8,10 @@ public class Livre {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private String author;
+
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", nullable = false)
+    private Author author;
     private String genre;
     private int yearPublish;
     private int pageNumber;
@@ -16,7 +19,7 @@ public class Livre {
 
     public Livre() {}
 
-    public Livre(String title, String author, String genre, int yearPublish, int pageNumber) {
+    public Livre(String title, Author author, String genre, int yearPublish, int pageNumber) {
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -40,11 +43,11 @@ public class Livre {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
