@@ -1,54 +1,53 @@
-package Doranco.entity;
+package com.doranco.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "livres")
+@Table
 public class Livre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    private String titre;
-    private String auteur;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String title;
+    private String author;
     private String genre;
-    private int anneePublication;
-    private int nombrePages;
+    private int yearPublish;
+    private int pageNumber;
 
     public Livre() {
     }
 
-    public Livre(String titre, String auteur, String genre, int anneePublication, int nombrePages) {
-        this.titre = titre;
-        this.auteur = auteur;
+    public Livre(String title, String author, String genre, int yearPublish, int pageNumber) {
+        this.title = title;
+        this.author = author;
         this.genre = genre;
-        this.anneePublication = anneePublication;
-        this.nombrePages = nombrePages;
+        this.yearPublish = yearPublish;
+        this.pageNumber = pageNumber;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTitre() {
-        return titre;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getAuteur() {
-        return auteur;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuteur(String auteur) {
-        this.auteur = auteur;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getGenre() {
@@ -59,31 +58,31 @@ public class Livre {
         this.genre = genre;
     }
 
-    public int getAnneePublication() {
-        return anneePublication;
+    public int getYearPublish() {
+        return yearPublish;
     }
 
-    public void setAnneePublication(int anneePublication) {
-        this.anneePublication = anneePublication;
+    public void setYearPublish(int yearPublish) {
+        this.yearPublish = yearPublish;
     }
 
-    public int getNombrePages() {
-        return nombrePages;
+    public int getPageNumber() {
+        return pageNumber;
     }
 
-    public void setNombrePages(int nombrePages) {
-        this.nombrePages = nombrePages;
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
     }
 
     @Override
     public String toString() {
         return "Livre{" +
                 "id=" + id +
-                ", titre='" + titre + '\'' +
-                ", auteur='" + auteur + '\'' +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
                 ", genre='" + genre + '\'' +
-                ", anneePublication=" + anneePublication +
-                ", nombrePages=" + nombrePages +
+                ", yearPublish=" + yearPublish +
+                ", pageNumber=" + pageNumber +
                 '}';
     }
 }
