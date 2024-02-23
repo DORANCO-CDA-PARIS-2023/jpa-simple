@@ -1,5 +1,7 @@
 package fr.doranco.jpasimple.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public final class ScannerUtils {
@@ -76,5 +78,22 @@ public final class ScannerUtils {
         } while (result == null);
 
         return result;
+    }
+
+    public Date getDate(String prompt, SimpleDateFormat format, boolean canBeNull) {
+        Date date = null;
+
+        do {
+            System.out.print(prompt);
+            try {
+                String input = sc.nextLine();
+                if (input.equalsIgnoreCase("null") && canBeNull) {
+                    return null;
+                }
+                date = format.parse(input);
+            } catch (Exception ignored) { }
+        } while (date == null);
+
+        return date;
     }
 }

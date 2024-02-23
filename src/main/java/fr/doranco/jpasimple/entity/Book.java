@@ -2,29 +2,43 @@ package fr.doranco.jpasimple.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "book")
 @NamedQuery(name = "findAll", query = "SELECT b FROM Book b")
 @NamedQuery(name = "findByTitle", query = "SELECT b FROM Book b WHERE title LIKE :title")
-@NamedQuery(name = "findByAuthor", query = "SELECT b FROM Book b WHERE author LIKE :author")
-@NamedQuery(name = "findByType", query = "SELECT b FROM Book b WHERE type LIKE :type")
+@NamedQuery(name = "findByAuthor", query = "SELECT b FROM Book b WHERE CONCAT(author.lastname, ' ', author.name) LIKE :author")
+@NamedQuery(name = "findByType", query = """
+        SELECT b FROM Book b 
+        JOIN BookCategory bc ON bc.name LIKE :type
+        WHERE bc.name LIKE :type
+        """)
 @NamedQuery(name = "findByYearPublish", query = "SELECT b FROM Book b WHERE yearPublish = :yearPublish")
 public final class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-    @Column(name = "title")
     private String title;
-    @Column(name = "author")
-    private String author;
-    @Column(name = "year_publish")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author", nullable = false)
+    private Author author;
     private int yearPublish;
-    @Column(name = "type")
-    private String type;
+    @ManyToMany
+    @JoinTable(
+            name = "book_categories",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_category_id")
+    )
+    private List<BookCategory> bookCategories;
     @Column(name = "page_number")
     private int pageNumber;
+
+    public Book() {
+        this.bookCategories = new ArrayList<>();
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -42,12 +56,16 @@ public final class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public List<BookCategory> getBookCategories() {
+        return bookCategories;
     }
 
     public int getYearPublish() {
@@ -58,14 +76,6 @@ public final class Book {
         this.yearPublish = yearPublish;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public int getPageNumber() {
         return pageNumber;
     }
@@ -74,14 +84,17 @@ public final class Book {
         this.pageNumber = pageNumber;
     }
 
+    public void addBookCategory(BookCategory bookCategory) {
+        this.bookCategories.add(bookCategory);
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
+                ", author=" + author +
                 ", yearPublish=" + yearPublish +
-                ", type='" + type + '\'' +
                 ", pageNumber=" + pageNumber +
                 '}';
     }

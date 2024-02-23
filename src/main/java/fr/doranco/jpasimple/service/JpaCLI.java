@@ -1,11 +1,16 @@
 package fr.doranco.jpasimple.service;
 
+import fr.doranco.jpasimple.entity.Author;
 import fr.doranco.jpasimple.entity.Book;
+import fr.doranco.jpasimple.entity.BookCategory;
 import fr.doranco.jpasimple.model.EntityManagerDorancoHibernate;
 import fr.doranco.jpasimple.utils.ScannerUtils;
 import jakarta.persistence.*;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public final class JpaCLI {
@@ -60,29 +65,91 @@ public final class JpaCLI {
                 "Entrez un titre → ",
                 false
         ));
-        book.setAuthor(scUtils.getString(
-                "Entrez le nom complet de l'auteur → ",
+
+
+        String authorFullName = scUtils.getString(
+                "Entrez le nom complet de l'auteur (nom prénom) → ",
                 false
-        ));
-        book.setType(scUtils.getString(
-                "Entrez le genre de livre → ",
-                false
-        ));
-        book.setPageNumber(scUtils.getInt(
-                "Entrez le nombre de page du livre → ",
-                1,
-                Integer.MAX_VALUE
-        ));
-        book.setYearPublish(scUtils.getInt(
-                "Entrez l'année de publication du livre → ",
-                Integer.MIN_VALUE,
-                Integer.MAX_VALUE
-        ));
+        ).trim();
+        authorFullName = authorFullName.split(" ")[0] + " " + authorFullName.split(" ")[authorFullName.split(" ").length - 1];
 
-        System.out.println(mediumSeparator);
-
-
+        Author author = null;
         try (EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Author> findByFullname = em.createNamedQuery("findByFullname", Author.class);
+            findByFullname.setParameter("fullname", authorFullName);
+            List<Author> authors = findByFullname.getResultList();
+            if (authors.isEmpty()) {
+                System.out.println("Il n'y aucun auteur existant du nom de " + authorFullName + ", nous allons le créer.");
+
+                Date birthday = scUtils.getDate(
+                        "Entrez sa date de naissance (dd/MM/yyyy):",
+                        new SimpleDateFormat("dd/MM/yyyy"),
+                        false
+                );
+
+                EntityTransaction transaction = em.getTransaction();
+                transaction.begin();
+
+                Author newAuthor = new Author();
+                newAuthor.setLastname(authorFullName.split(" ")[0]);
+                newAuthor.setName(authorFullName.split(" ")[1]);
+                newAuthor.setBirthday(birthday);
+
+                em.persist(newAuthor);
+
+                transaction.commit();
+
+                System.out.println("L'auteur a été crée avec succès");
+                author = newAuthor;
+            } else {
+                author = authors.get(0);
+            }
+
+
+            book.setAuthor(author);
+
+            String categoryName = scUtils.getString(
+                    "Entrez le genre de livre → ",
+                    false
+            );
+
+            BookCategory bookCategory = null;
+            TypedQuery<BookCategory> findByName = em.createNamedQuery("findByName", BookCategory.class);
+            findByName.setParameter("name", categoryName);
+            List<BookCategory> bookCategories = findByName.getResultList();
+
+            if (bookCategories.isEmpty()) {
+                System.out.println("Il n'y a aucun genre existant du type: " + categoryName + ", nous allons le créer.");
+
+                EntityTransaction transaction = em.getTransaction();
+                transaction.begin();
+
+                BookCategory newBookCategory = new BookCategory();
+                newBookCategory.setName(categoryName);
+                em.persist(newBookCategory);
+
+                transaction.commit();
+
+                System.out.println("Le genre a été crée avec succès.");
+                bookCategory = newBookCategory;
+            } else {
+                bookCategory = bookCategories.get(0);
+            }
+            book.addBookCategory(bookCategory);
+
+            book.setPageNumber(scUtils.getInt(
+                    "Entrez le nombre de page du livre → ",
+                    1,
+                    Integer.MAX_VALUE
+            ));
+            book.setYearPublish(scUtils.getInt(
+                    "Entrez l'année de publication du livre → ",
+                    Integer.MIN_VALUE,
+                    Integer.MAX_VALUE
+            ));
+
+            System.out.println(mediumSeparator);
+
             EntityTransaction transaction = em.getTransaction();
             transaction.begin();
             em.persist(book);

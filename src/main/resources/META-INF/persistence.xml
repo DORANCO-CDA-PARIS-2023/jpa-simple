@@ -6,6 +6,8 @@
     <persistence-unit name="dorancoHibernate">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>fr.doranco.jpasimple.entity.Book</class>
+        <class>fr.doranco.jpasimple.entity.Author</class>
+        <class>fr.doranco.jpasimple.entity.BookCategory</class>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1/doranco_hibernate"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
