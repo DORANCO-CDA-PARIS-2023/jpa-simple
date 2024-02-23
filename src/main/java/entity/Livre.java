@@ -1,35 +1,56 @@
 package entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
+@Entity @Table(name = "livre")
 public class Livre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    
+    @Column(name = "titre")
     private String titre;
-    private String auteur;
-    private String genre;
+    
+    @ManyToOne
+	@JoinColumn(name = "author_id")
+    private Auteur auteur;
+    
+    @ManyToOne
+	@JoinColumn(name = "genre_id")
+    private Genre genre;
+    
+    @Column(name = "annee_publication")
     private int anneePublication;
+    
+    @Column(name = "nombre_page")
     private int nombrePages;
 
-    // Constructeur par défaut (requis par JPA)
     public Livre() {}
 
-    // Constructeur avec tous les champs
-    public Livre(String titre, String auteur, String genre, int anneePublication, int nombrePages) {
-        this.titre = titre;
-        this.auteur = auteur;
-        this.genre = genre;
+    public Livre(String titre, int anneePublication, int nombrePages) {
+        this.titre = titre;        
         this.anneePublication = anneePublication;
         this.nombrePages = nombrePages;
     }
 
-    // Getters et setters pour tous les champs
-    public Long getId() {
+    public Auteur getAuteur() {
+		return auteur;
+	}
+
+	public void setAuteur(Auteur auteur) {
+		this.auteur = auteur;
+	}
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -43,22 +64,6 @@ public class Livre {
 
     public void setTitre(String titre) {
         this.titre = titre;
-    }
-
-    public String getAuteur() {
-        return auteur;
-    }
-
-    public void setAuteur(String auteur) {
-        this.auteur = auteur;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public int getAnneePublication() {
@@ -75,5 +80,17 @@ public class Livre {
 
     public void setNombrePages(int nombrePages) {
         this.nombrePages = nombrePages;
+    }
+    
+    @Override
+    public String toString() {
+        return "Livre{" +
+                "id=" + id +
+                ", title='" + titre + '\'' +
+                ", author='" + auteur + '\'' +
+                ", genre='" + genre + '\'' +
+                ", yearPublish=" + anneePublication +
+                ", pageNumber=" + nombrePages +
+                '}';
     }
 }
