@@ -1,6 +1,6 @@
 package doranco;
 
-import doranco.Entity.Livre;
+import doranco.Entity.OldLivre;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -19,7 +19,7 @@ public class AppLivre {
                                                     // https://stackoverflow.com/questions/8464370/jpa-when-to-use-gettransaction-when-persisting-objects
 
             // We create an instance
-            Livre nouveauLivre = new Livre();
+            OldLivre nouveauLivre = new OldLivre();
             nouveauLivre.setTitre(titre);
             nouveauLivre.setAuteur(auteur);
             nouveauLivre.setGenre(genre);
@@ -46,8 +46,8 @@ public class AppLivre {
 
         try {
             // We use the NamedQuery here
-            List<Livre> livres = entityManager.createNamedQuery("Livre.findAll", Livre.class).getResultList();
-            for (Livre livre : livres) {
+            List<OldLivre> livres = entityManager.createNamedQuery("Livre.findAll", OldLivre.class).getResultList();
+            for (OldLivre livre : livres) {
                 System.out.println("Affichage de TOUS les livres: " + livre.getTitre() + ", Auteur: "
                         + livre.getAuteur() + ", Genre: "
                         + livre.getGenre() + ", Année de publication: " + livre.getAnneePublication()
@@ -60,15 +60,15 @@ public class AppLivre {
 
     }
 
-    public static List<Livre> findByTitre(String titre) {
+    public static List<OldLivre> findByTitre(String titre) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CoursJpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            TypedQuery<Livre> query = entityManager.createNamedQuery("Livre.findByTitre", Livre.class);
+            TypedQuery<OldLivre> query = entityManager.createNamedQuery("Livre.findByTitre", OldLivre.class);
             query.setParameter("titre", "%" + titre + "%"); // To search with all the possibilities in the name
-            List<Livre> livres = query.getResultList();
+            List<OldLivre> livres = query.getResultList();
 
-            for (Livre livre : livres) {
+            for (OldLivre livre : livres) {
                 System.out.println("Voici le résultat de la recherche par TITRE : " + livre.getTitre() +
                         ", Auteur: " + livre.getAuteur() + ", Genre: " + livre.getGenre() +
                         ", Année de publication: " + livre.getAnneePublication() + ", Nombre de pages: "
@@ -81,15 +81,15 @@ public class AppLivre {
         return null; // to avoid error from vscode
     }
 
-    public static List<Livre> findByAuteur(String auteur) {
+    public static List<OldLivre> findByAuteur(String auteur) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CoursJpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            TypedQuery<Livre> query = entityManager.createNamedQuery("Livre.findByAuteur", Livre.class);
+            TypedQuery<OldLivre> query = entityManager.createNamedQuery("Livre.findByAuteur", OldLivre.class);
             query.setParameter("auteur", auteur);
-            List<Livre> livres = query.getResultList();
+            List<OldLivre> livres = query.getResultList();
 
-            for (Livre livre : livres) {
+            for (OldLivre livre : livres) {
                 System.out.println("Voici le résultat de la recherche par AUTEUR : " + livre.getTitre() +
                         ", Auteur: " + livre.getAuteur() + ", Genre: " + livre.getGenre() +
                         ", Année de publication: " + livre.getAnneePublication() + ", Nombre de pages: "
@@ -102,15 +102,15 @@ public class AppLivre {
         return null; // to avoid error from vscode
     }
 
-    public static List<Livre> findByGenre(String genre) {
+    public static List<OldLivre> findByGenre(String genre) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CoursJpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            TypedQuery<Livre> query = entityManager.createNamedQuery("Livre.findByGenre", Livre.class);
+            TypedQuery<OldLivre> query = entityManager.createNamedQuery("Livre.findByGenre", OldLivre.class);
             query.setParameter("genre", genre);
-            List<Livre> livres = query.getResultList();
+            List<OldLivre> livres = query.getResultList();
 
-            for (Livre livre : livres) {
+            for (OldLivre livre : livres) {
                 System.out.println("Voici le résultat de la recherche par GENRE : " + livre.getTitre() +
                         ", Auteur: " + livre.getAuteur() + ", Genre: " + livre.getGenre() +
                         ", Année de publication: " + livre.getAnneePublication() + ", Nombre de pages: "
@@ -127,11 +127,11 @@ public class AppLivre {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CoursJpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            TypedQuery<Livre> query = entityManager.createNamedQuery("Livre.findByAnneePublication", Livre.class);
+            TypedQuery<OldLivre> query = entityManager.createNamedQuery("Livre.findByAnneePublication", OldLivre.class);
             query.setParameter("anneePublication", anneePublication);
-            List<Livre> livres = query.getResultList();
+            List<OldLivre> livres = query.getResultList();
 
-            for (Livre livre : livres) {
+            for (OldLivre livre : livres) {
                 System.out.println("Voici le résultat de la recherche par ANNEE : " + livre.getTitre() +
                         ", Auteur: " + livre.getAuteur() + ", Genre: " + livre.getGenre() +
                         ", Année de publication: " + livre.getAnneePublication() + ", Nombre de pages: "
@@ -143,15 +143,15 @@ public class AppLivre {
         entityManagerFactory.close();
     }
 
-    public static List<Livre> findByNombrePages(int nombrePages) {
+    public static List<OldLivre> findByNombrePages(int nombrePages) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CoursJpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            TypedQuery<Livre> query = entityManager.createNamedQuery("Livre.findByNombrePages", Livre.class);
+            TypedQuery<OldLivre> query = entityManager.createNamedQuery("Livre.findByNombrePages", OldLivre.class);
             query.setParameter("nombrePages", nombrePages);
-            List<Livre> livres = query.getResultList();
+            List<OldLivre> livres = query.getResultList();
 
-            for (Livre livre : livres) {
+            for (OldLivre livre : livres) {
                 System.out.println("Voici le résultat de la recherche par NOMBRE de PAGES : " + livre.getTitre() +
                         ", Auteur: " + livre.getAuteur() + ", Genre: " + livre.getGenre() +
                         ", Année de publication: " + livre.getAnneePublication() + ", Nombre de pages: "

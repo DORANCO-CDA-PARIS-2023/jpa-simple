@@ -3,22 +3,30 @@ package doranco.Entity;
 import jakarta.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Livre.findAll", query = "SELECT l FROM Livre l"),
+        @NamedQuery(name = "Livre.findByTitre", query = "SELECT l FROM Livre l WHERE l.titre LIKE :titre"),
+        @NamedQuery(name = "Livre.findByAuteur", query = "SELECT l FROM Livre l WHERE l.auteur = :auteur"),
+        @NamedQuery(name = "Livre.findByGenre", query = "SELECT l FROM Livre l WHERE l.genre = :genre"),
+        @NamedQuery(name = "Livre.findByAnneePublication", query = "SELECT l FROM Livre l WHERE l.anneePublication = :anneePublication"),
+        @NamedQuery(name = "Livre.findByNombrePages", query = "SELECT l FROM Livre l WHERE l.nombrePages = :nombrePages")
+})
+
 @Table(name = "livre")
-public class Livre {
+public class OldLivre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "titre")
     private String titre;
 
-    @ManyToOne
-    @JoinColumn(name = "auteur_id", referencedColumnName = "id")
-    private Auteur auteur;
+    @Column(name = "auteur")
+    private String auteur;
 
-    @ManyToOne
-    @JoinColumn(name = "genre_id", referencedColumnName = "id")
-    private Genre genre;
+    @Column(name = "genre")
+    private String genre;
 
     @Column(name = "anneePublication")
     private Integer anneePublication;
@@ -43,19 +51,19 @@ public class Livre {
         this.titre = titre;
     }
 
-    public Auteur getAuteur() {
+    public String getAuteur() {
         return auteur;
     }
 
-    public void setAuteur(Auteur auteur) {
+    public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
 
-    public Genre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
@@ -74,4 +82,5 @@ public class Livre {
     public void setNombrePages(Integer nombrePages) {
         this.nombrePages = nombrePages;
     }
+
 }
