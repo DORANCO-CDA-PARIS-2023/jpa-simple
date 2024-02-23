@@ -7,13 +7,15 @@
  <persistence-unit name="JpaSimple">
  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
  <class>jpa.entity.Livre</class>
+  <class>jpa.entity.Auteur</class>
+  <class>jpa.entity.Genre</class>
  <properties>
 <!--  <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver" />
  --> <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost/bu_jpa" />
  <property name="jakarta.persistence.jdbc.user" value="root" />
  <property name="jakarta.persistence.jdbc.password" value="root" />
  <property name="jakarta.persistence.schema-generation.database.action" 
-value="none" />
+value="drop-and-create" />
 <!-- database.action : drop-and-create si on veut que reset la table à chaque lancement, update si alter table, none si on veut aucune action
  --> </properties>
  </persistence-unit>

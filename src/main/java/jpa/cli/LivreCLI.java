@@ -118,7 +118,7 @@ public class LivreCLI {
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
-    		break;
+    		break; 
     	case 9:
         	try {
         		System.out.println("Année à rechercher : ");

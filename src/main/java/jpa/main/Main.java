@@ -12,8 +12,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-//		 EntityManagerFactory emf = Persistence.createEntityManagerFactory("JpaSimple");
-//		 try (EntityManager em = emf.createEntityManager()) {
+		 EntityManagerFactory emf = Persistence.createEntityManagerFactory("JpaSimple");
+		 try (EntityManager em = emf.createEntityManager()) {
 //		 EntityTransaction transaction = em.getTransaction();
 ////		 transaction.begin();
 //		 // Opérations CRUD avec la classe Employee
@@ -37,11 +37,11 @@ public class Main {
 //		 livreDAO.modifierNombrePages(em, 16, 4000);
 //		 transaction.commit();
 //		 
-//		 } catch (Exception e) {
-//		 e.printStackTrace();
-//		 } finally {
-//		 emf.close();
-//		 }
+		 } catch (Exception e) {
+		 e.printStackTrace();
+		 } finally {
+		 emf.close();
+		 }
 
 	}
 

@@ -1,10 +1,13 @@
 package jpa.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 //toutes les annotations à importer sont de jakarta.persistence
@@ -20,11 +23,13 @@ public class Livre {
 	 @Column(name = "title")
 	 private String titre;
 	 
-	 @Column(name = "author")
-	 private String auteur;
+	 @ManyToOne
+	 @JoinColumn(name = "author_id")
+	 private Auteur auteur;
 	 
-	 @Column(name = "genre")
-	 private String genre;
+	 @ManyToOne
+	 @JoinColumn(name = "genre_id")
+	 private Genre genre;
 	 
 	 @Column(name = "publishing_year")
 	 private int anneePublication;
@@ -48,21 +53,6 @@ public class Livre {
 		this.titre = titre;
 	}
 
-	public String getAuteur() {
-		return auteur;
-	}
-
-	public void setAuteur(String auteur) {
-		this.auteur = auteur;
-	}
-
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
 
 	public int getAnneePublication() {
 		return anneePublication;
@@ -78,12 +68,6 @@ public class Livre {
 
 	public void setNombreDePages(int nombreDePages) {
 		this.nombreDePages = nombreDePages;
-	}
-
-	@Override
-	public String toString() {
-		return "Livre [id=" + id + ", titre=" + titre + ", auteur=" + auteur + ", genre=" + genre
-				+ ", anneePublication=" + anneePublication + ", nombreDePages=" + nombreDePages + "]";
 	}
 	 
 	 
