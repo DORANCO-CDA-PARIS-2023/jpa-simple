@@ -8,14 +8,16 @@ public class Livre {
 
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name = "id_auteur")
+@Column(name = "id_livre")
 private int id;
 
 @Column(name = "titre")
 private String titre;
 
-@Column(name = "auteur")
-private String auteur;
+@ManyToOne
+@JoinColumn(name = "id_auteur", unique = true)
+private Auteur auteur;
+
 
 @Column(name = "genre")
 private String genre;
@@ -34,11 +36,11 @@ public void setTitre(String titre) {
 	this.titre = titre;
 }
 
-public String getAuteur() {
-	return auteur;
+public Auteur getAuteur() {
+	return getAuteur();
 }
 
-public void setAuteur(String auteur) {
+public void setAuteur(Auteur auteur) {
 	this.auteur = auteur;
 }
 
