@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -32,10 +31,10 @@ public class Book {
         // Default constructor
     }
 
-    public Book(String title, String author, String genre, int yearPublication, int numberPages) {
+    public Book(String title, int yearPublication, int numberPages) {
         this.title = title;
-        this.author = author;
-        this.genre = genre;
+        //this.author = author;
+        //this.genre = genre;
         this.yearPublication = yearPublication;
         this.numberPages = numberPages;
     }

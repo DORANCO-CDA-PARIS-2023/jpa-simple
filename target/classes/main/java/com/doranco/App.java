@@ -3,20 +3,26 @@ package com.doranco;
 
 import com.doranco.library.Book;
 import com.doranco.library.BookDAO;
+import com.doranco.library.CLI;
+
+import java.sql.SQLException;
 
 class App {
-    public static void main(String[] args) {
+    App() throws SQLException {
+    }
+
+    public static void main(String[] args) throws SQLException {
         // Create a BookDAO instance
         BookDAO bookDAO = new BookDAO();
 
         // Create and save a new book
-        Book book1 = new Book("2","Author1","Poems",1999,85);
+        Book book1 = new Book("2", 1999, 85);
         book1.setTitle("The Great Gatsby");
         book1.setAuthor("F. Scott Fitzgerald");
-        Book book2=new Book("CatTrap","Nia.T","Story",2023,150);
+        Book book2 = new Book("CatTrap", 2023, 150);
         bookDAO.save(book2);
         bookDAO.save(book1);
-        bookDAO.save(new Book("Narsaiyo","Harindra Dave","spritual",1985,150));
+        bookDAO.save(new Book("Narsaiyo", 1985, 150));
         System.out.println("Book saved: " + book1);
 
         // Find a book by its ID
@@ -40,5 +46,11 @@ class App {
         // Find all books after deletion
         System.out.println("All books after deletion:");
         bookDAO.findAll().forEach(System.out::println);
+
+
+        CLI commandLine = new CLI();
+
+        commandLine.start();
+        }
     }
-}
+
