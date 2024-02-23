@@ -5,10 +5,10 @@
  version="2.0">
  <persistence-unit name="CoursJpa">
  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
- <class>doranco.Article</class>
+ <class>doranco.Hotel</class>
  <properties>
  <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver" />
- <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost/cours_jpa" />
+ <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost/exam_jpa" />
  <property name="jakarta.persistence.jdbc.user" value="root" />
  <property name="jakarta.persistence.jdbc.password" value="" />
  <property name="jakarta.persistence.schema-generation.database.action"
