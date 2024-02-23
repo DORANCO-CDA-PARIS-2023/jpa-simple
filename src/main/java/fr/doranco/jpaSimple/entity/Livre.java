@@ -3,7 +3,7 @@ package fr.doranco.jpaSimple.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "books")
+@Table(name = "Livre")
 public class Livre {
 
 	@Id
@@ -23,28 +23,26 @@ public class Livre {
 	@Column(name = "nombrePages")
 	private int nombrePages;
 
-	@Column(name = "auteur")
-	private String auteur;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "author_id", nullable = false)
+	private Auteur auteur;
 
 	public Livre() {
 	}
 
-	public Livre(String titre, String genre, int anneePublication, int nombrePages, String auteur) {
+	public Livre(String titre, String genre, int anneePublication, int nombrePages) {
 		this.titre = titre;
 		this.genre = genre;
 		this.anneePublication = anneePublication;
 		this.nombrePages = nombrePages;
-		this.auteur = auteur;
 	}
 
-	public Livre(int id, String titre, String genre, int anneePublication, int nombrePages, String auteur) {
-		super();
+	public Livre(int id, String titre, String genre, int anneePublication, int nombrePages) {
 		this.id = id;
 		this.titre = titre;
 		this.genre = genre;
 		this.anneePublication = anneePublication;
 		this.nombrePages = nombrePages;
-		this.auteur = auteur;
 	}
 
 	public int getId() {
@@ -87,18 +85,18 @@ public class Livre {
 		this.nombrePages = nombrePages;
 	}
 
-	public String getAuteur() {
+	public Auteur getAuteur() {
 		return auteur;
 	}
 
-	public void setAuteur(String auteur) {
+	public void setAuteur(Auteur auteur) {
 		this.auteur = auteur;
 	}
 
 	@Override
 	public String toString() {
 		return "Livre [id=" + id + ", titre=" + titre + ", genre=" + genre + ", anneePublication=" + anneePublication
-				+ ", nombrePages=" + nombrePages + ", auteur=" + auteur + "]";
+				+ ", nombrePages=" + nombrePages + ", auteur=" + auteur + ", getAuteur()=" + getAuteur() + "]";
 	}
 
 }
